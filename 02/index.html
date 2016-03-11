@@ -34,13 +34,13 @@
     <script src="lib/angular/angular-locale_pt-br.js"></script>
     <script>
         angular.module("listaTelefonica", ["ngMessages"]);
-        angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope) {
+        angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope, uppercaseFilter) {
 
             $scope.app = "Lista Telefonica";
 
             $scope.contatos = [
                 {
-                    nome: "Pedro",
+                    nome: uppercaseFilter("Pedro"),
                     telefone: "99998888",
                     data: new Date(),
                     cor: "yellow",
@@ -116,10 +116,10 @@
             <th>Cor</th>
         </tr>
         <tr ng-class="{'selecionado negrito': contato.selecionado}"
-            ng-repeat="contato in contatos | filter:{nome: criterioDeBusca} | orderBy: criterioDeOrdenacao:direcaoDaOrdenacao">
+            ng-repeat="contato in contatos | limitTo: 10 | filter:{nome: criterioDeBusca} | orderBy: criterioDeOrdenacao:direcaoDaOrdenacao">
 
             <td><input type="checkbox" ng-model="contato.selecionado"></td>
-            <td>{{contato.nome | uppercase}}</td>
+            <td>{{contato.nome}}</td>
             <td>{{contato.telefone}}</td>
             <td>{{contato.data | date:'dd/MM/yyyy HH:mm'}}</td>
             <td>{{contato.operadora.nome | lowercase}}</td>
