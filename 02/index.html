@@ -34,47 +34,42 @@
     <script src="lib/angular/angular-locale_pt-br.js"></script>
     <script>
         angular.module("listaTelefonica", ["ngMessages"]);
-        angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope, uppercaseFilter) {
+        angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope, $http) {
 
             $scope.app = "Lista Telefonica";
 
-            $scope.contatos = [
-                {
-                    nome: uppercaseFilter("Pedro"),
-                    telefone: "99998888",
-                    data: new Date(),
-                    cor: "yellow",
-                    operadora: {nome: "Oi", codigo: "14", categoria: "Celular"}
-                },
-                {
-                    nome: "Ana",
-                    telefone: "64654654",
-                    data: new Date(),
-                    cor: "red",
-                    operadora: {nome: "Vivo", codigo: "15", categoria: "Celular"}
-                },
-                {
-                    nome: "Maria",
-                    telefone: "54616516",
-                    data: new Date(),
-                    cor: "green",
-                    operadora: {nome: "Tim", codigo: "41", categoria: "Celular"}
-                }
-            ];
+            $scope.contatos = [];
 
-            $scope.operadoras = [
-                {nome: "Oi", codigo: "14", categoria: "Celular", preco: 2},
-                {nome: "Vivo", codigo: "15", categoria: "Celular", preco: 1},
-                {nome: "Tim", codigo: "41", categoria: "Celular", preco: 3},
-                {nome: "GVT", codigo: "25", categoria: "Fixo", preco: 1},
-                {nome: "Embratel", codigo: "21", categoria: "Fixo", preco: 2}
-            ];
+            $scope.operadoras = [];
+
+            var carregarContatos = function () {
+                $http.get("http://localhost/angularjsrodrigobranas/02/backend/contatosBackend.php")
+                        .success(function (data) {
+                            $scope.contatos = data;
+                        })
+                        .error(function (data) {
+                            $scope.message = "Aconteceu algum problema: " + data;
+                        });
+            };
+
+            var carregarOperadoras = function () {
+                $http.get("http://localhost/angularjsrodrigobranas/02/backend/operadorasBackend.php").success(function (data) {
+                    $scope.operadoras = data;
+                });
+            };
 
             $scope.adicionarContato = function (contato) {
                 //$scope.contatos.push(contato);
                 $scope.contatos.push(angular.copy(contato));
                 delete $scope.contato;
                 $scope.contatoForm.$setPristine();
+
+                // add contato
+                //$http.post("http://localhost/angularjsrodrigobranas/02/backend/contatosBackend.php", contato).success(data, function(){
+                //    delete $scope.contato;
+                //    $scope.contatoForm.$setPristine();
+                //    carregarContatos();
+                //});
             };
 
             $scope.apagarContatos = function (contatos) {
@@ -95,6 +90,9 @@
                 $scope.direcaoDaOrdenacao = !$scope.direcaoDaOrdenacao;
             }
 
+            carregarContatos();
+            carregarOperadoras();
+
         });
     </script>
 </head>
@@ -105,6 +103,8 @@
     <h3>{{app}}</h3>
 
     <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando">
+
+    {{message}}
 
     <table ng-show="contatos.length > 0" class="table _table-striped">
         <tr>
@@ -130,9 +130,6 @@
     </table>
 
     <hr>
-
-    É válido: {{contatoForm.$valid}}<br>
-    É inválido: {{contatoForm.$invalid}}<br>
 
     <form name="contatoForm">
 
