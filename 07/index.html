@@ -43,7 +43,7 @@
 
             <td><input type="checkbox" ng-model="contato.selecionado"></td>
             <td>{{contato.serial}}</td>
-            <td>{{contato.nome | name | ellipsis}}</td>
+            <td>{{contato.nome | name | ellipsis:19}}</td>
             <td>{{contato.telefone}}</td>
             <td>{{contato.data | date:'dd/MM/yyyy HH:mm'}}</td>
             <td>{{contato.operadora.nome | lowercase}}</td>

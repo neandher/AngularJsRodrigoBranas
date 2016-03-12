@@ -1,8 +1,12 @@
 angular.module("listaTelefonica").filter("ellipsis", function () {
-    return function (input) {
+    return function (input, size) {
 
-        console.log(input)
+        //console.log(input)
 
-        return input
+        if(input.length <= size) return input;
+
+        var output = input.substring(0,(size || 2)) + '...';
+
+        return output;
     }
 });
