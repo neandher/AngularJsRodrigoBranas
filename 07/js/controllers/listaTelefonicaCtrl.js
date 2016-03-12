@@ -6,6 +6,10 @@ angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($s
 
     $scope.operadoras = [];
 
+    //$scope.contato = {
+    //    data: 1034218800000
+    //};
+
     var carregarContatos = function () {
         contatosAPI.getContatos()
             .success(function (data) {
@@ -14,8 +18,8 @@ angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($s
                 })
                 $scope.contatos = data;
             })
-            .error(function (data) {
-                $scope.error = "Aconteceu algum problema!";
+            .error(function (data, status) {
+                $scope.error = "Aconteceu algum problema: " + status;
             });
     };
 

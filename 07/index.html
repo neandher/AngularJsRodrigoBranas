@@ -19,6 +19,7 @@
     <script src="js/filters/nameFilter.js"></script>
     <script src="js/filters/ellipsisFilter.js"></script>
     <script src="js/directives/uiAlertDirective.js"></script>
+    <script src="js/directives/uiDateDirective.js"></script>
 </head>
 <body ng-controller="listaTelefonicaCtrl">
 
@@ -26,12 +27,8 @@
 
     <h3>{{app}}</h3>
 
-    <ui-alert title="Ops, aconteceu um problema!">
+    <ui-alert title="Ops, aconteceu um problema!" ng-if="error">
         {{error}}
-    </ui-alert>
-
-    <ui-alert title="Série sobre AngularJS">
-        Episódio 10 - Criando Diretivas - Parte 1
     </ui-alert>
 
     <input class="form-control" type="text" ng-model="criterioDeBusca" placeholder="O que você está buscando">
@@ -51,7 +48,7 @@
 
             <td><input type="checkbox" ng-model="contato.selecionado"></td>
             <td>{{contato.serial}}</td>
-            <td>{{contato.nome | name | ellipsis:19}}</td>
+            <td>{{contato.nome | name | ellipsis:10}}</td>
             <td>{{contato.telefone}}</td>
             <td>{{contato.data | date:'dd/MM/yyyy HH:mm'}}</td>
             <td>{{contato.operadora.nome | lowercase}}</td>
@@ -75,6 +72,14 @@
             <label>Telefone</label>
             <input class="form-control" type="text" name="telefone" ng-model="contato.telefone" ng-required="true"
                    ng-pattern="/^\d{4,5}-\d{4}$/">
+        </div>
+
+        {{contato.data}}
+
+        <div class="form-group">
+            <label>Data</label>
+            <input class="form-control" type="text" name="data" ng-model="contato.data" ng-required="true"
+                   ui-date>
         </div>
 
         <div class="form-group">
