@@ -1,4 +1,4 @@
-angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope, $http) {
+angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($scope, contatosAPI, operadorasAPI, serialGenerator) {
 
     $scope.app = "Lista Telefonica";
 
@@ -7,7 +7,7 @@ angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($s
     $scope.operadoras = [];
 
     var carregarContatos = function () {
-        $http.get("http://localhost:8080/angular/angularjsrodrigobranas/07/backend/contatosBackend.php")
+        contatosAPI.getContatos()
             .success(function (data) {
                 $scope.contatos = data;
             })
@@ -17,7 +17,7 @@ angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($s
     };
 
     var carregarOperadoras = function () {
-        $http.get("http://localhost:8080/angular/angularjsrodrigobranas/07/backend/operadorasBackend.php").success(function (data) {
+        operadorasAPI.getOperadoras().success(function (data) {
             $scope.operadoras = data;
         });
     };
@@ -28,8 +28,17 @@ angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($s
         delete $scope.contato;
         $scope.contatoForm.$setPristine();
 
-        // add contato
+        // add contato API
         //$http.post("http://localhost:8080/angular/angularjsrodrigobranas/07/backend/contatosBackend.php", contato).success(data, function(){
+        //    delete $scope.contato;
+        //    $scope.contatoForm.$setPristine();
+        //    carregarContatos();
+        //});
+
+        // add contato API SERVICES
+        //contato.serial = serialGenerator.generate;
+        //contato.data = new Date();
+        //contatosAPI.saveContato(contato).success(data, function(){
         //    delete $scope.contato;
         //    $scope.contatoForm.$setPristine();
         //    carregarContatos();
