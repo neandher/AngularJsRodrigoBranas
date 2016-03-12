@@ -9,10 +9,13 @@ angular.module("listaTelefonica").controller("listaTelefonicaCtrl", function ($s
     var carregarContatos = function () {
         contatosAPI.getContatos()
             .success(function (data) {
+                data.forEach(function(item){
+                    item.serial = serialGenerator.generate();
+                })
                 $scope.contatos = data;
             })
             .error(function (data) {
-                $scope.message = "Aconteceu algum problema: " + data;
+                $scope.error = "Aconteceu algum problema!";
             });
     };
 
