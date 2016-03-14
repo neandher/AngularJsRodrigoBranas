@@ -1,5 +1,7 @@
 <?php
+
 $contatos[] = [
+              'id' => 1,
               'nome' => "Pedro jorge da silva",
               'telefone' => "75756756",
               'data' => date('d/m/Y H:i'),
@@ -8,6 +10,7 @@ $contatos[] = [
               ];
 
 $contatos[] = [
+              'id' => 2,
               'nome' => "Ana maria Guilherme",
               'telefone' => "756756756",
               'data' => date('d/m/Y H:i'),
@@ -16,6 +19,7 @@ $contatos[] = [
               ];
 
 $contatos[] = [
+              'id' => 3,
               'nome' => "Maria Pranto do joao",
               'telefone' => "423423423",
               'data' => date('d/m/Y H:i'),
